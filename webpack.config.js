@@ -21,17 +21,10 @@ module.exports = [{
           use: "css-loader?modules&importLoaders=1&localIdentName=[local]___[hash:base64:5]!stylus-loader",
         })
       },
-      // {
-      //   test: /\.styl/,
-      //   use: arabic_css.extract({
-      //     use: "css-loader?modules&importLoaders=1&localIdentName=[local]___[hash:base64:5]!stylus-loader",
-      //   })
-      // },
     ]
   },
   plugins: [
     english_css,
-    // arabic_css
   ]
 },{
   entry: './index.js',
@@ -41,13 +34,6 @@ module.exports = [{
   },
   module: {
     rules: [
-      // {
-      //   test: /\.styl/,
-      //   exclude: /_ar/,
-      //   use: english_css.extract({
-      //     use: "css-loader?modules&importLoaders=1&localIdentName=[local]___[hash:base64:5]!stylus-loader",
-      //   })
-      // },
       {
         test: /\.styl/,
         use: arabic_css.extract({
@@ -57,7 +43,6 @@ module.exports = [{
     ]
   },
   plugins: [
-    // english_css,
     arabic_css
   ]
 }]
