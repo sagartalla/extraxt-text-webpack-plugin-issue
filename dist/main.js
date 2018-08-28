@@ -70,7 +70,7 @@
 // import styles from './style.styl';
 const styles = __webpack_require__(1);
 try {
-  const styles_ar = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"./styles_ar.styl\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+  const styles_ar = __webpack_require__(2);
 } catch(e){
   console.log('e',e);
 }
@@ -81,6 +81,12 @@ try {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 2 */
+/***/ (function(module, exports) {
+
+throw new Error("Module parse failed: Unexpected character '@' (1:0)\nYou may need an appropriate loader to handle this file type.\n| @import './common.styl';\n| \n| div");
 
 /***/ })
 /******/ ]);
