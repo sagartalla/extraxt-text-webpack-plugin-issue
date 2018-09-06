@@ -1,0 +1,17 @@
+div {
+  background: #0ff;
+}
+div {
+  background: #f00;
+}
+.test {
+  display: block;
+}
+
+div {
+  background: #0ff;
+}
+div {
+  background: #fff;
+}
+

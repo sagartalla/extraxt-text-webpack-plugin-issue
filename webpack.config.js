@@ -1,10 +1,5 @@
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const path = require("path");
-
-const ExtractTextWebpackPlugin = require("extract-text-webpack-plugin");
-
-const english_css = new ExtractTextWebpackPlugin("english.css");
-const arabic_css = new ExtractTextWebpackPlugin("arabic.css");
-
 
 module.exports = [{
   entry: './index.js',
@@ -12,37 +7,52 @@ module.exports = [{
     filename: '[name].js',
     path: path.resolve(path.join(__dirname, "./dist")),
   },
+  optimization: {
+    splitChunks: {
+      cacheGroups: {
+        vendor: false,
+        commons: {
+          name: 'commons',
+          test: /.styl$/,
+          chunks: 'all',
+          enforce: true,
+          minChunks: 1,
+        },
+        englishStyle: {
+          name: 'styles_en',
+          test: (c) => {
+            return c.type.match(/mini-css-extract-plugin/) && c._identifier.indexOf('_ar') === -1;
+          },
+          chunks: 'all',
+          enforce: true,
+        },
+        arabicStyles: {
+          name: 'styles_ar',
+          test: (c) => {
+            return c.type.match(/mini-css-extract-plugin/) && c._identifier.indexOf('_ar') !== -1;
+          },
+          chunks: 'all',
+          enforce: true,
+        }
+      }
+    }
+  },
   module: {
     rules: [
       {
-        test: /\.styl/,
-        exclude: /_ar/,
-        use: english_css.extract({
-          use: "css-loader?modules&importLoaders=1&localIdentName=[local]___[hash:base64:5]!stylus-loader",
-        })
+        test: /\.styl$/,
+        use: [
+          MiniCssExtractPlugin.loader,
+          "css-loader",
+          "stylus-loader"
+        ],
       },
     ]
   },
   plugins: [
-    english_css,
-  ]
-},{
-  entry: './index.js',
-  output: {
-    filename: '[name].js',
-    path: path.resolve(path.join(__dirname, "./dist")),
-  },
-  module: {
-    rules: [
-      {
-        test: /\.styl/,
-        use: arabic_css.extract({
-          use: "css-loader?modules&importLoaders=1&localIdentName=[local]___[hash:base64:5]!stylus-loader",
-        })
-      },
-    ]
-  },
-  plugins: [
-    arabic_css
+    new MiniCssExtractPlugin({
+      filename: "[name].css",
+      chunkFilename: "[name].css"
+    })
   ]
 }]
