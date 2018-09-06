@@ -24,6 +24,7 @@ module.exports = [{
             return c.type.match(/mini-css-extract-plugin/) && c._identifier.indexOf('_ar') === -1;
           },
           chunks: 'all',
+          priority: 1,
           enforce: true,
         },
         arabicStyles: {
@@ -31,6 +32,7 @@ module.exports = [{
           test: (c) => {
             return c.type.match(/mini-css-extract-plugin/) && c._identifier.indexOf('_ar') !== -1;
           },
+          priority: 1,
           chunks: 'all',
           enforce: true,
         }
